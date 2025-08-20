@@ -6,15 +6,17 @@ import com.seuprojeto.reserva_salas_api.model.Usuario;
 import com.seuprojeto.reserva_salas_api.repository.ReservaRepository;
 import com.seuprojeto.reserva_salas_api.repository.SalaRepository;
 import com.seuprojeto.reserva_salas_api.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @Service
-
 public class ReservaService {
+
     private final ReservaRepository reservaRepository;
     private final SalaRepository salaRepository;
     private final UsuarioRepository usuarioRepository;
@@ -33,12 +35,18 @@ public class ReservaService {
         validarIntervalo(inicio, fim);
 
         Sala sala = salaRepository.findById(salaId)
-                .orElseThrow(() -> new IllegalArgumentException("Sala não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Sala não encontrada"));
+
         Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
         boolean conflito = reservaRepository.existsConflito(salaId, data, inicio, fim);
-        if (conflito) throw new IllegalStateException("Conflito de horário para a sala");
+        if (conflito) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Conflito de horário para a sala");
+        }
 
         Reserva r = new Reserva(sala, usuario, data, inicio, fim);
         return reservaRepository.save(r);
@@ -50,18 +58,26 @@ public class ReservaService {
         validarIntervalo(inicio, fim);
 
         Reserva r = reservaRepository.findById(reservaId)
-                .orElseThrow(() -> new IllegalArgumentException("Reserva não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Reserva não encontrada"));
 
         // regra: usuário só altera a própria reserva
         if (!r.getUsuario().getId().equals(usuarioId)) {
-            throw new SecurityException("Não pode editar reserva de outro usuário");
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "Não pode editar reserva de outro usuário");
         }
 
         boolean conflito = reservaRepository.existsConflito(r.getSala().getId(), data, inicio, fim);
 
-        // Se o usuário realmente mudou data/horário, e há conflito, bloqueia
-        boolean mudou = !data.equals(r.getData()) || !inicio.equals(r.getHoraInicio()) || !fim.equals(r.getHoraFim());
-        if (mudou && conflito) throw new IllegalStateException("Conflito de horário para a sala");
+        // Se realmente mudou data/horário e há conflito, bloqueia
+        boolean mudou = !data.equals(r.getData())
+                || !inicio.equals(r.getHoraInicio())
+                || !fim.equals(r.getHoraFim());
+
+        if (mudou && conflito) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Conflito de horário para a sala");
+        }
 
         r.setData(data);
         r.setHoraInicio(inicio);
@@ -71,10 +87,12 @@ public class ReservaService {
 
     public void cancelar(Long reservaId, Long usuarioId) {
         Reserva r = reservaRepository.findById(reservaId)
-                .orElseThrow(() -> new IllegalArgumentException("Reserva não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Reserva não encontrada"));
 
         if (!r.getUsuario().getId().equals(usuarioId)) {
-            throw new SecurityException("Não pode cancelar reserva de outro usuário");
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "Não pode cancelar reserva de outro usuário");
         }
         reservaRepository.delete(r);
     }
@@ -89,8 +107,9 @@ public class ReservaService {
 
     private void validarIntervalo(LocalTime inicio, LocalTime fim) {
         if (!inicio.isBefore(fim)) {
-            throw new IllegalArgumentException("Hora início deve ser antes da hora fim");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Hora início deve ser antes da hora fim");
         }
-        // (opcional) regras como: só horário comercial, múltiplos de 30 min etc.
+        // (opcional) outras regras de negócio
     }
 }

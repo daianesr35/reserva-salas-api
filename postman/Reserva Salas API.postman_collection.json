@@ -1,0 +1,1988 @@
+{
+	"info": {
+		"_postman_id": "c1a24977-963e-48b4-87e3-dbb674c2e440",
+		"name": "Reserva Salas API",
+		"description": "Coleção de requisições para testar a API de reservas de salas (Spring Boot + JWT).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47732475",
+		"_collection_link": "https://daiane-ribeiro-1600749.postman.co/workspace/46391619-d145-4917-853e-b7dd88110772/collection/47732475-c1a24977-963e-48b4-87e3-dbb674c2e440?action=share&source=collection_link&creator=47732475"
+	},
+	"item": [
+		{
+			"name": "A) Login ADMIN (salva admin_token)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status 200', function () { pm.response.to.have.status(200); });",
+							"try {",
+							"  const json = pm.response.json();",
+							"  pm.environment.set('admin_token', json.token);",
+							"} catch(e) {}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@ifsertao-pe.com\",\n  \"senha\": \"admin123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "A) Login ADMIN (salva admin_token)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@ifsertao-pe.com\",\n  \"senha\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:34:11 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpZnNlcnRhby1wZS5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc1NTY2MDg1MSwiZXhwIjoxNzU1NjY0NDUxfQ.xus1JIG3YcllUymgsqDEzg_PnsJrQBaoPEzvOLUNQfc\"\n}"
+				}
+			]
+		},
+		{
+			"name": "B) Criar Sala (ADMIN)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpZnNlcnRhby1wZS5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc1NTY1Mjg4NiwiZXhwIjoxNzU1NjU2NDg2fQ.3CteORQI0D5gjG457h0SGWqYrNLvgeYvRRU7BYJ-d7A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Lab 101\",\n  \"capacidade\": 30,\n  \"local\": \"Bloco A\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/salas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"salas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "B) Criar Sala (ADMIN)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Lab 101\",\n  \"capacidade\": 30,\n  \"local\": \"Bloco A\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/salas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 02:02:30 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nome\": \"Lab 101\",\n    \"capacidade\": 30,\n    \"local\": \"Bloco A\"\n}"
+				},
+				{
+					"name": "B) Criar Sala (ADMIN)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Sala 102\",\n  \"local\": \"Bloco de Salas de aulas\",\n  \"capacidade\": 40\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/salas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:36:24 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"nome\": \"Sala 102\",\n    \"capacidade\": 40,\n    \"local\": \"Bloco de Salas de aulas\"\n}"
+				},
+				{
+					"name": "B) Criar Sala (ADMIN)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Lab de Física\",\n  \"local\": \"Bloco de Laboratórios\",\n  \"capacidade\": 10\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/salas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:37:16 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"nome\": \"Lab de Física\",\n    \"capacidade\": 10,\n    \"local\": \"Bloco de Laboratórios\"\n}"
+				}
+			]
+		},
+		{
+			"name": "C) Listar Salas (público)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/salas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"salas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "C) Listar Salas (público)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/salas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 02:05:11 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"nome\": \"Lab 101\",\n        \"capacidade\": 30,\n        \"local\": \"Bloco A\"\n    }\n]"
+				},
+				{
+					"name": "C) Listar Salas (público)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/salas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:37:34 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"nome\": \"Lab 101\",\n        \"capacidade\": 30,\n        \"local\": \"Bloco A\"\n    },\n    {\n        \"id\": 2,\n        \"nome\": \"Sala 102\",\n        \"capacidade\": 40,\n        \"local\": \"Bloco de Salas de aulas\"\n    },\n    {\n        \"id\": 3,\n        \"nome\": \"Lab de Física\",\n        \"capacidade\": 10,\n        \"local\": \"Bloco de Laboratórios\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "D) Registrar Usuário (Maria)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Maria\",\n  \"email\": \"{{user_email}}\",\n  \"senha\": \"{{user_senha}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "D) Registrar Usuário (Maria)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Maria\",\n  \"email\": \"maria@ifsertao-pe.com\",\n  \"senha\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 02:12:11 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "E) Login Usuário (salva user_token)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status 200', function () { pm.response.to.have.status(200); });",
+							"try {",
+							"  const json = pm.response.json();",
+							"  pm.environment.set('user_token', json.token);",
+							"} catch(e) {}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"maria@ifsertao-pe.com\",\n  \"senha\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "E) Login Usuário (salva user_token)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"maria@ifsertao-pe.com\",\n  \"senha\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:08:11 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpYUBpZnNlcnRhby1wZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzU1NjYyODkxLCJleHAiOjE3NTU2NjY0OTF9.diCkeV4jrtVuyrzp00-JIgxclSHDjaQ8F91qg-8Jq60\"\n}"
+				}
+			]
+		},
+		{
+			"name": "F) Criar Reserva (USER) [salva reserva_id]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('status 200', function () { pm.response.to.have.status(200); });",
+							"try {",
+							"  const json = pm.response.json();",
+							"  if (json && json.id) pm.environment.set('reserva_id', json.id);",
+							"} catch(e) {}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"salaId\": \"{{sala_id}}\",\n  \"data\": \"{{data_teste}}\",\n  \"horaInicio\": \"{{hora_inicio}}\",\n  \"horaFim\": \"{{hora_fim}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/reservas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reservas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "F) Criar Reserva (USER) [salva reserva_id]",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"salaId\": 1,\n  \"data\": \"2025-08-20\",\n  \"horaInicio\": \"08:00\",\n  \"horaFim\": \"10:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 02:22:07 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"salaId\": 1,\n    \"usuarioId\": 3,\n    \"data\": \"2025-08-20\",\n    \"horaInicio\": \"08:00\",\n    \"horaFim\": \"10:00\"\n}"
+				},
+				{
+					"name": "F) Criar Reserva (USER) [salva reserva_id]",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"salaId\": 2,\n  \"data\": \"2025-08-21\",\n  \"horaInicio\": \"09:00\",\n  \"horaFim\": \"12:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:39:53 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"salaId\": 2,\n    \"usuarioId\": 3,\n    \"data\": \"2025-08-21\",\n    \"horaInicio\": \"09:00\",\n    \"horaFim\": \"12:00\"\n}"
+				},
+				{
+					"name": "F) Criar Reserva (USER) [salva reserva_id]",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"salaId\": 3,\n  \"data\": \"2025-08-22\",\n  \"horaInicio\": \"09:00\",\n  \"horaFim\": \"11:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:09:10 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"salaId\": 3,\n    \"usuarioId\": 3,\n    \"data\": \"2025-08-22\",\n    \"horaInicio\": \"09:00\",\n    \"horaFim\": \"11:00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "G) Minhas Reservas (USER)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/reservas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reservas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "G) Minhas Reservas (USER)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/reservas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:09:49 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"salaId\": 1,\n        \"usuarioId\": 3,\n        \"data\": \"2025-01-01\",\n        \"horaInicio\": \"10:00\",\n        \"horaFim\": \"11:00\"\n    },\n    {\n        \"id\": 2,\n        \"salaId\": 2,\n        \"usuarioId\": 3,\n        \"data\": \"2025-08-21\",\n        \"horaInicio\": \"09:00\",\n        \"horaFim\": \"12:00\"\n    },\n    {\n        \"id\": 3,\n        \"salaId\": 3,\n        \"usuarioId\": 3,\n        \"data\": \"2025-08-22\",\n        \"horaInicio\": \"09:00\",\n        \"horaFim\": \"11:00\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "H) Disponibilidade do Dia",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/salas/disponibilidade?salaId={{sala_id}}&data={{data_teste}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"salas",
+						"disponibilidade"
+					],
+					"query": [
+						{
+							"key": "salaId",
+							"value": "{{sala_id}}"
+						},
+						{
+							"key": "data",
+							"value": "{{data_teste}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "H) Disponibilidade do Dia",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/salas/disponibilidade?salaId=1&data=2025-08-20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas",
+								"disponibilidade"
+							],
+							"query": [
+								{
+									"key": "salaId",
+									"value": "1"
+								},
+								{
+									"key": "data",
+									"value": "2025-08-20"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 02:27:59 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"salaId\": 1,\n        \"usuarioId\": 3,\n        \"data\": \"2025-08-20\",\n        \"horaInicio\": \"08:00\",\n        \"horaFim\": \"10:00\"\n    }\n]"
+				},
+				{
+					"name": "H) Disponibilidade do Dia",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/salas/disponibilidade?salaId=2&data=2025-08-21",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas",
+								"disponibilidade"
+							],
+							"query": [
+								{
+									"key": "salaId",
+									"value": "2"
+								},
+								{
+									"key": "data",
+									"value": "2025-08-21"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:41:36 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 2,\n        \"salaId\": 2,\n        \"usuarioId\": 3,\n        \"data\": \"2025-08-21\",\n        \"horaInicio\": \"09:00\",\n        \"horaFim\": \"12:00\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "I) Criar Reserva CONFLITO (USER) [espera 409]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('status 409', function () { pm.response.to.have.status(409); });"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"salaId\": \"{{sala_id}}\",\n  \"data\": \"{{data_teste}}\",\n  \"horaInicio\": \"09:00\",\n  \"horaFim\": \"11:00\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/reservas",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reservas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "I) Criar Reserva CONFLITO (USER) [espera 409]",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"salaId\":  1,\n  \"data\": \"2025-08-20\",\n  \"horaInicio\": \"09:00\",\n  \"horaFim\": \"11:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:04:42 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "J) Atualizar Reserva (USER)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"data\": \"{{data_teste}}\",\n  \"horaInicio\": \"10:00\",\n  \"horaFim\": \"11:00\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/reservas/{{reserva_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reservas",
+						"{{reserva_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "J) Atualizar Reserva (USER)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": \"{{data_teste}}\",\n  \"horaInicio\": \"10:00\",\n  \"horaFim\": \"11:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas/{{reserva_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas",
+								"{{reserva_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 03:10:27 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"salaId\": 1,\n    \"usuarioId\": 3,\n    \"data\": \"2025-01-01\",\n    \"horaInicio\": \"10:00\",\n    \"horaFim\": \"11:00\"\n}"
+				},
+				{
+					"name": "J) Atualizar Reserva (USER)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": \"{{data_teste}}\",\n  \"horaInicio\": \"13:00\",\n  \"horaFim\": \"15:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:16:01 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"salaId\": 3,\n    \"usuarioId\": 3,\n    \"data\": \"2025-01-01\",\n    \"horaInicio\": \"13:00\",\n    \"horaFim\": \"15:00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "K) Cancelar Reserva (USER)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/reservas/{{reserva_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reservas",
+						"{{reserva_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "K) Cancelar Reserva (USER)",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/reservas/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reservas",
+								"2"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:24:27 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "L) Atualizar Sala como USER (espera 403)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('status 403', function () { pm.response.to.have.status(403); });"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Lab 101 - edit\",\n  \"capacidade\": 40,\n  \"local\": \"Bloco A\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/salas/{{sala_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"salas",
+						"{{sala_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "L) Atualizar Sala como USER (espera 403)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Lab 101 - Eng. Software\",\n  \"capacidade\": 40,\n  \"local\": \"Bloco A\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/salas/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:26:50 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nome\": \"Lab 101 - Eng. Software\",\n    \"capacidade\": 40,\n    \"local\": \"Bloco A\"\n}"
+				}
+			]
+		},
+		{
+			"name": "M) Deletar Sala como USER (espera 403)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('status 403', function () { pm.response.to.have.status(403); });"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{user_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/salas/{{sala_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"salas",
+						"{{sala_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "M) Deletar Sala como USER (espera 403)",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/salas/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"salas",
+								"2"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 20 Aug 2025 04:27:32 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	]
+}
